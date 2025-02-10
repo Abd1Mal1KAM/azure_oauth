@@ -1,0 +1,39 @@
+Metadata-Version: 2.2
+Name: azure_oauth
+Version: 0.1.0
+Summary: Oauth2 authorization
+Home-page: https://github.com/yourusername/your-package
+Author: Abdimalik Abdi Mohamed
+Author-email: Abdimalik.AbdiMohamed@apollo_underwriting.com
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: blinker==1.9.0
+Requires-Dist: certifi==2024.12.14
+Requires-Dist: charset-normalizer==3.4.1
+Requires-Dist: click==8.1.8
+Requires-Dist: colorama==0.4.6
+Requires-Dist: Flask==3.1.0
+Requires-Dist: idna==3.10
+Requires-Dist: itsdangerous==2.2.0
+Requires-Dist: Jinja2==3.1.5
+Requires-Dist: MarkupSafe==3.0.2
+Requires-Dist: requests==2.32.3
+Requires-Dist: tenacity==9.0.0
+Requires-Dist: types-requests==2.32.0.20241016
+Requires-Dist: urllib3==2.3.0
+Requires-Dist: Werkzeug==3.1.3
+Dynamic: author
+Dynamic: author-email
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# OAuth2 Authentication Script
+
+-- This script handles OAuth2 authentication for a given service using the provided credentials and details. It authenticates a user by requesting their SERVICE, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, and optional SCOPES.
+
+Make sure to download the folder and unzip into your downloads

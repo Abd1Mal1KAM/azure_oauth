@@ -1,0 +1,12 @@
+LICENSE
+README.md
+setup.py
+azure_oauth/__init__.py
+azure_oauth/arg_example.py
+azure_oauth/main.py
+azure_oauth/oauth_handler.py
+azure_oauth.egg-info/PKG-INFO
+azure_oauth.egg-info/SOURCES.txt
+azure_oauth.egg-info/dependency_links.txt
+azure_oauth.egg-info/requires.txt
+azure_oauth.egg-info/top_level.txt

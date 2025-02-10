@@ -1,0 +1,57 @@
+{
+    "azure": {
+        "BASE_URL": "https://dev.azure.com",
+        "AUTH_URL": "https://app.vssps.visualstudio.com/oauth2/authorize",
+        "TOKEN_URL": "https://app.vssps.visualstudio.com/oauth2/token"
+    },
+    "microsoft_graph": {
+        "BASE_URL": "https://graph.microsoft.com",
+        "AUTH_URL": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
+        "TOKEN_URL": "https://login.microsoftonline.com/common/oauth2/v2.0/token"
+    },
+    "google": {
+        "BASE_URL": "https://www.googleapis.com",
+        "AUTH_URL": "https://accounts.google.com/o/oauth2/auth",
+        "TOKEN_URL": "https://oauth2.googleapis.com/token"
+    },
+    "github": {
+        "BASE_URL": "https://api.github.com",
+        "AUTH_URL": "https://github.com/login/oauth/authorize",
+        "TOKEN_URL": "https://github.com/login/oauth/access_token"
+    },
+    "spotify": {
+        "BASE_URL": "https://api.spotify.com",
+        "AUTH_URL": "https://accounts.spotify.com/authorize",
+        "TOKEN_URL": "https://accounts.spotify.com/api/token"
+    },
+    "facebook": {
+        "BASE_URL": "https://graph.facebook.com",
+        "AUTH_URL": "https://www.facebook.com/dialog/oauth",
+        "TOKEN_URL": "https://graph.facebook.com/oauth/access_token"
+    },
+    "slack": {
+        "BASE_URL": "https://slack.com/api",
+        "AUTH_URL": "https://slack.com/oauth/v2/authorize",
+        "TOKEN_URL": "https://slack.com/api/oauth.v2.access"
+    },
+    "twitter": {
+        "BASE_URL": "https://api.twitter.com",
+        "AUTH_URL": "https://api.twitter.com/oauth/authorize",
+        "TOKEN_URL": "https://api.twitter.com/oauth/access_token"
+    },
+    "linkedin": {
+        "BASE_URL": "https://api.linkedin.com",
+        "AUTH_URL": "https://www.linkedin.com/oauth/v2/authorization",
+        "TOKEN_URL": "https://www.linkedin.com/oauth/v2/accessToken"
+    },
+    "paypal": {
+        "BASE_URL": "https://api-m.paypal.com",
+        "AUTH_URL": "https://www.paypal.com/signin/authorize",
+        "TOKEN_URL": "https://api-m.paypal.com/v1/oauth2/token"
+    },
+    "dropbox": {
+        "BASE_URL": "https://api.dropboxapi.com",
+        "AUTH_URL": "https://www.dropbox.com/oauth2/authorize",
+        "TOKEN_URL": "https://api.dropboxapi.com/oauth2/token"
+    }
+}
