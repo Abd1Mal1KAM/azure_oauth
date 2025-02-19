@@ -16,8 +16,7 @@ from pathlib import Path
 
 from flask import request as req, Flask, redirect
 
-from utils.general import create_random_string, get_many #type: ignore
-from utils.apis import handle_response #type: ignore
+from helpers import create_random_string, get_many, handle_response
 
 with open(Path(__file__).parent / "service_config.json", encoding="utf-8") as file:
     service_config: Dict[str, Dict[str, str]] = json.load(file)

@@ -43,16 +43,22 @@ Usage:
 
 import os
 from argparse import Namespace
+
 from oauth_handler import OAuth2
 from arg_example import parser
+from helpers import (
+    check_python,
+    install_dependencies,
+    create_venv,
+    exit_code,
+)
 
-from utils.general import check_python, install_dependencies, create_venv, exit_code #type: ignore
 
 def initialise() -> None:
     """_summary_"""
     check_python()
 
-    current_dir = os.getcwd()
+    current_dir = os.path.dirname(os.getcwd())
     create_venv(current_dir)
     install_dependencies(current_dir)
 
@@ -64,7 +70,21 @@ def main() -> None:
 
     args: Namespace = parser.parse_args()
 
-    service: str = (args.SERVICE).lower()
+    if not args.SERVICE:
+        args.SERVICE = input("Service name: ")
+    if not args.CLIENT_ID:
+        args.CLIENT_ID = input("Client ID: ")
+    if not args.CLIENT_SECRET:
+        args.CLIENT_SECRET = input("Client secret: ")
+    if not args.REDIRECT_URI:
+        args.REDIRECT_URI = input("Redirect URI: ")
+    if not args.SCOPES:
+        args.SCOPES = input("Scopes (Optional): ")
+
+    try:
+        service: str = (args.SERVICE).lower()
+    except AttributeError:
+        service = ""
 
     client_id: str = args.CLIENT_ID
     client_secret: str = args.CLIENT_SECRET

@@ -3,6 +3,7 @@ README.md
 setup.py
 azure_oauth/__init__.py
 azure_oauth/arg_example.py
+azure_oauth/helpers.py
 azure_oauth/main.py
 azure_oauth/oauth_handler.py
 azure_oauth.egg-info/PKG-INFO
