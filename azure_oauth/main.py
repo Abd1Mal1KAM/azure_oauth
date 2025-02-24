@@ -44,9 +44,9 @@ Usage:
 import os
 from argparse import Namespace
 
-from oauth_handler import OAuth2
-from arg_example import parser
-from helpers import (
+from azure_oauth.oauth_handler import OAuth2
+from azure_oauth.arg_example import parser
+from azure_oauth.helpers import (
     check_python,
     install_dependencies,
     create_venv,

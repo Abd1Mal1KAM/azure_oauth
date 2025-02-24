@@ -6,17 +6,17 @@
 import time
 import sys
 import webbrowser
-from typing import (
-    Tuple,
-    Optional,
-    Dict
-)
+from typing import Tuple, Optional, Dict
 import json
 from pathlib import Path
 
 from flask import request as req, Flask, redirect
 
-from helpers import create_random_string, get_many, handle_response
+from azure_oauth.helpers import (
+    create_random_string,
+    get_many,
+    handle_response,
+)
 
 with open(Path(__file__).parent / "service_config.json", encoding="utf-8") as file:
     service_config: Dict[str, Dict[str, str]] = json.load(file)
