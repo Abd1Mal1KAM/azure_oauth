@@ -124,14 +124,13 @@ def install_dependencies() -> None:
     """
 
     folder_path = os.getcwd()
-
-    subcheck(["pip", "install", "--quiet", "pipreqs"], "Failed to install pipreqs")
-
-    subcheck(
-        ["pipreqs", folder_path, "--force"], "Failed to generate requirements file."
-    )
-
     requirements_path = os.path.join(folder_path, "requirements.txt")
+
+    if not os.path.exists(requirements_path):
+        subcheck(["pip", "install", "--quiet", "pipreqs"], "Failed to install pipreqs")
+        subcheck(
+            ["pipreqs", folder_path, "--force"], "Failed to generate requirements file."
+        )
 
     subcheck(
         [sys.executable, "-m", "pip", "install", "--quiet", "-r", requirements_path],
