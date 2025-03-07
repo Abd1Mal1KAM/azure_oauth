@@ -11,8 +11,9 @@ import string
 import re
 import json
 
+from argparse import ArgumentParser, Namespace
 from functools import wraps
-from typing import Optional, List, Union, TypeAlias, Dict, Callable, Any, get_args
+from typing import Optional, List, Union, TypeAlias, Dict, Callable, Type, Any, get_args
 
 import requests
 import requests_cache
@@ -63,10 +64,10 @@ def create_venv(venv_path: str) -> None:
     """
 
     if not os.path.exists(venv_path):
-        venv.create(venv_path, with_pip=True)
-        print("Virtual Environment has been created")
-    else:
-        pass
+        raise NameError(f"Path given: {os.path.abspath(venv_path)} does not exist")
+
+    venv.create(venv_path, with_pip=True)
+    print("Virtual Environment has been created")
 
 
 def check_python() -> None:
@@ -77,6 +78,53 @@ def check_python() -> None:
         "Error: Python is not installed or not found in the system path."
         + "Please install Python from https://www.python.org/downloads/",
     )
+
+
+def parse_arguments(
+    arguments: list[str],
+    desc: Optional[str] = None,
+    prog: Optional[str] = None,
+    helps: Optional[List[str]] = None,
+    defaults: Optional[List[str]] = None,
+    types: Optional[List[Type]] = None,
+) -> Namespace:
+    """Parses command-line arguments.
+
+    Args:
+        desc (str): The description of the script.
+        arguments (List[str]): A list of argument names.
+        helps (Optional[List[str]]): A list of help descriptions for the arguments.
+        Defaults to None.
+
+    Returns:
+        Namespace: The parsed arguments.
+    """
+
+    parser = ArgumentParser(
+        description=desc if desc else None, prog=prog if prog else None
+    )
+
+    for i, arg in enumerate(arguments):
+        parser.add_argument(
+            f"--{arg}",
+            required=False,
+            help=helps[i] if helps and helps[i] else None,
+            default=defaults[i] if defaults and defaults[i] else None,
+            type=types[i] if types and types[i] else str,
+        )
+
+    args = parser.parse_args()
+
+    if not all(getattr(args, arg) for arg in arguments):
+        print("\nEnter the missing parameters. (Dont add quotation marks)")
+
+    for arg in arguments:
+        if not getattr(args, arg):
+            value = input(f"{arg}: ")
+            value.strip("'").strip('"')
+            setattr(args, arg, value)
+
+    return args
 
 
 def exit_code(func):

@@ -42,18 +42,15 @@ Usage:
 """
 
 import os
-import sys
 from argparse import Namespace
 
-sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
-
 from oauth_handler import OAuth2  # type: ignore
-from arg_example import parser  # type: ignore
 from helpers import (  # type: ignore
     check_python,
     install_dependencies,
     create_venv,
     exit_code,
+    parse_arguments,
 )
 
 
@@ -61,8 +58,7 @@ def initialise() -> None:
     """_summary_"""
     check_python()
 
-    current_dir = os.path.dirname(os.getcwd())
-    create_venv(current_dir)
+    create_venv(os.path.abspath(os.getcwd()))
     install_dependencies()
 
 
@@ -72,18 +68,34 @@ def main() -> None:
 
     initialise()
 
-    args: Namespace = parser.parse_args()
-
-    if not args.SERVICE:
-        args.SERVICE = input("Service name: ")
-    if not args.CLIENT_ID:
-        args.CLIENT_ID = input("Client ID: ")
-    if not args.CLIENT_SECRET:
-        args.CLIENT_SECRET = input("Client secret: ")
-    if not args.REDIRECT_URI:
-        args.REDIRECT_URI = input("Redirect URI: ")
-    if not args.SCOPES:
-        args.SCOPES = input("Scopes (Optional): ")
+    chosen_arguments = [
+        "SERVICE",
+        "CLIENT_ID",
+        "CLIENT_SECRET",
+        "REDIRECT_URI",
+        "SCOPES",
+    ]
+    args: Namespace = parse_arguments(
+        prog="OAuth2",
+        desc="""
+        Authenticates the user after entering:
+        - SERVICE
+        - CLIENT_ID
+        - CLIENT_SECRET
+        - REDIRECT_URI
+        - SCOPES
+        """,
+        arguments=chosen_arguments,
+        helps=[
+            "Service for app which requires authentication, e.g. Azure",
+            "Personal Client id for registered app",
+            "Personal Client Secret for registered app",
+            "URL to redirect to during the authorization process",
+            "Scopes provided to the user depending on which apis need to be called",
+        ],
+        types=[str] * len(chosen_arguments),
+        defaults=[""] * len(chosen_arguments),
+    )
 
     try:
         service: str = (args.SERVICE).lower()
