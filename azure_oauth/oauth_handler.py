@@ -11,7 +11,7 @@ from pathlib import Path
 
 from flask import request as req, Flask, redirect
 
-from azure_oauth.helpers import (
+from helpers import (
     create_random_string,
     get_many,
     handle_response,

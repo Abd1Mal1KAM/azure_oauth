@@ -47,9 +47,9 @@ from argparse import Namespace
 
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 
-from azure_oauth.oauth_handler import OAuth2
-from azure_oauth.arg_example import parser
-from azure_oauth.helpers import (
+from oauth_handler import OAuth2
+from arg_example import parser
+from helpers import (
     check_python,
     install_dependencies,
     create_venv,
