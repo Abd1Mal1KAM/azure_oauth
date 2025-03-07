@@ -47,9 +47,9 @@ from argparse import Namespace
 
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 
-from oauth_handler import OAuth2
-from arg_example import parser
-from helpers import (
+from oauth_handler import OAuth2  # type: ignore
+from arg_example import parser  # type: ignore
+from helpers import (  # type: ignore
     check_python,
     install_dependencies,
     create_venv,
@@ -63,7 +63,7 @@ def initialise() -> None:
 
     current_dir = os.path.dirname(os.getcwd())
     create_venv(current_dir)
-    install_dependencies(current_dir)
+    install_dependencies()
 
 
 @exit_code

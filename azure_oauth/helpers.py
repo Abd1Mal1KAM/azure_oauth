@@ -31,6 +31,30 @@ IterableType: TypeAlias = Optional[Dict[AnyType, AnyType]]
 JsonResponse: TypeAlias = Optional[Dict[Key, Key]]
 
 
+def subcheck(commands: List[str], err_msg: Optional[str] = None) -> None:
+    """Run a subprocess command and handle errors.
+
+    Args:
+        commands (List[str]): The list of command arguments to run.
+        err_msg (Optional[str], optional):
+            The error message to raise if the command fails. Defaults to None.
+
+    Raises:
+        RuntimeError: If the command fails and an error message is provided.
+    """
+    try:
+        subprocess.check_call(commands)
+    except (
+        subprocess.CalledProcessError,
+        subprocess.TimeoutExpired,
+        subprocess.SubprocessError,
+    ) as exc:
+        if not err_msg:
+            err_msg = "Failed to run task"
+
+        raise RuntimeError(err_msg) from exc
+
+
 def create_venv(venv_path: str) -> None:
     """Create a virtual environment in the given path.
 
@@ -48,12 +72,11 @@ def create_venv(venv_path: str) -> None:
 def check_python() -> None:
     """Check if Python is installed and accessible."""
 
-    try:
-        subprocess.check_call([sys.executable, "--version"])
-    except subprocess.CalledProcessError:
-        print("Error: Python is not installed or not found in the system path.")
-        print("Please install Python from https://www.python.org/downloads/")
-        sys.exit(1)
+    subcheck(
+        [sys.executable, "--version"],
+        "Error: Python is not installed or not found in the system path."
+        + "Please install Python from https://www.python.org/downloads/",
+    )
 
 
 def exit_code(func):
@@ -93,48 +116,27 @@ def create_random_string() -> str:
     return random_str
 
 
-def install_dependencies(folder_path: Optional[str] = None) -> None:
+def install_dependencies() -> None:
     """_summary_
 
     Args:
         folder_path (str): _description_
     """
 
-    if not folder_path:
-        folder_path = os.getcwd()
+    folder_path = os.getcwd()
 
-    try:
-        subprocess.check_call(["pipreqs", folder_path])
-    except (
-        subprocess.CalledProcessError,
-        subprocess.TimeoutExpired,
-        subprocess.SubprocessError,
-    ) as exc:
-        raise RuntimeError("Failed to generate requirements file.") from exc
+    subcheck(["pip", "install", "--quiet", "pipreqs"], "Failed to install pipreqs")
+
+    subcheck(
+        ["pipreqs", folder_path, "--force"], "Failed to generate requirements file."
+    )
 
     requirements_path = os.path.join(folder_path, "requirements.txt")
 
-    if os.path.exists(requirements_path):
-        try:
-            subprocess.check_call(
-                [
-                    sys.executable,
-                    "-m",
-                    "pip",
-                    "install",
-                    "--quiet",
-                    "-r",
-                    requirements_path,
-                ]
-            )
-        except (
-            subprocess.CalledProcessError,
-            subprocess.TimeoutExpired,
-            subprocess.SubprocessError,
-        ) as exc:
-            raise RuntimeError(
-                "Failed to install dependencies from 'requirements.txt'"
-            ) from exc
+    subcheck(
+        [sys.executable, "-m", "pip", "install", "--quiet", "-r", requirements_path],
+        "Failed to install dependencies from 'requirements.txt'",
+    )
 
 
 def get_many(
