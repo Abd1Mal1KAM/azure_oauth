@@ -123,7 +123,7 @@ def install_dependencies() -> None:
         folder_path (str): _description_
     """
 
-    folder_path = os.getcwd()
+    folder_path = os.path.dirname(os.path.abspath(__file__))
     requirements_path = os.path.join(folder_path, "requirements.txt")
 
     if not os.path.exists(requirements_path):
