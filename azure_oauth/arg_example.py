@@ -1,7 +1,6 @@
 # utils/arg_example.py
 
-"""_summary_
-"""
+"""_summary_"""
 
 import argparse
 

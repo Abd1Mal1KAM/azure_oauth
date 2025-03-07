@@ -1,7 +1,6 @@
 # helpers.py
 
-"""_summary_
-"""
+"""_summary_"""
 import os
 import venv
 import sys
@@ -30,6 +29,7 @@ AnyType: TypeAlias = Optional[Union[float, str, bool, List[Any], Any]]
 Key: TypeAlias = Union[str, int, float]
 IterableType: TypeAlias = Optional[Dict[AnyType, AnyType]]
 JsonResponse: TypeAlias = Optional[Dict[Key, Key]]
+
 
 def create_venv(venv_path: str) -> None:
     """Create a virtual environment in the given path.
@@ -103,6 +103,15 @@ def install_dependencies(folder_path: Optional[str] = None) -> None:
     if not folder_path:
         folder_path = os.getcwd()
 
+    try:
+        subprocess.check_call(["pipreqs", folder_path])
+    except (
+        subprocess.CalledProcessError,
+        subprocess.TimeoutExpired,
+        subprocess.SubprocessError,
+    ) as exc:
+        raise RuntimeError("Failed to generate requirements file.") from exc
+
     requirements_path = os.path.join(folder_path, "requirements.txt")
 
     if os.path.exists(requirements_path):
@@ -122,8 +131,10 @@ def install_dependencies(folder_path: Optional[str] = None) -> None:
             subprocess.CalledProcessError,
             subprocess.TimeoutExpired,
             subprocess.SubprocessError,
-        ):
-            ...
+        ) as exc:
+            raise RuntimeError(
+                "Failed to install dependencies from 'requirements.txt'"
+            ) from exc
 
 
 def get_many(
@@ -158,6 +169,7 @@ def get_many(
         return get_many(current, item_list[1:], default)
 
     return current
+
 
 def extract_api_name(api_url: str) -> str:
     """Extracts the name of the api from its url
@@ -209,13 +221,13 @@ def handle_response(
     Args:
         target_url (str): The target URL for the API request.
         method (str, optional): The HTTP method to use for the request. Defaults to "GET".
-        params (Optional[dict], optional): 
+        params (Optional[dict], optional):
             The query parameters to include in the request. Defaults to None.
         headers (Optional[dict], optional): The headers to include in the request. Defaults to None.
         body (Optional[dict], optional): The body data to include in the request. Defaults to None.
-        column (Optional[str], optional): 
+        column (Optional[str], optional):
             The specific column to extract from the response JSON. Defaults to None.
-        display_error_messages (Optional[bool], optional): 
+        display_error_messages (Optional[bool], optional):
             Whether to display error messages. Defaults to False.
 
     Returns:

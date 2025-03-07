@@ -1,7 +1,6 @@
 # oauth_handler.py
 
-"""_summary_
-"""
+"""_summary_"""
 
 import time
 import sys
@@ -20,6 +19,7 @@ from azure_oauth.helpers import (
 
 with open(Path(__file__).parent / "service_config.json", encoding="utf-8") as file:
     service_config: Dict[str, Dict[str, str]] = json.load(file)
+
 
 class OAuth2:
     """_summary_"""

@@ -10,17 +10,17 @@ The script performs the following tasks:
 6. Authenticates the user using OAuth2.
 Functions:
     initialise: Sets up the environment by:
-    Checking the Python version, 
-    Creating a virtual environment, 
+    Checking the Python version,
+    Creating a virtual environment,
     Installing dependencies.
-    main: The main entry point of the script. 
+    main: The main entry point of the script.
     Parses command-line arguments, prompts for missing credentials, and authenticates the user.
 Usage:
-    python main.py 
-    --SERVICE <service> 
-    --CLIENT_ID <client_id> 
-    --CLIENT_SECRET <client_secret> 
-    --REDIRECT_URI <redirect_uri> 
+    python main.py
+    --SERVICE <service>
+    --CLIENT_ID <client_id>
+    --CLIENT_SECRET <client_secret>
+    --REDIRECT_URI <redirect_uri>
     --SCOPES <scopes>
     Initializes the environment by performing the following tasks:
     - Checks if the correct version of Python is being used.
@@ -42,7 +42,10 @@ Usage:
 """
 
 import os
+import sys
 from argparse import Namespace
+
+sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 
 from azure_oauth.oauth_handler import OAuth2
 from azure_oauth.arg_example import parser
@@ -61,6 +64,7 @@ def initialise() -> None:
     current_dir = os.path.dirname(os.getcwd())
     create_venv(current_dir)
     install_dependencies(current_dir)
+
 
 @exit_code
 def main() -> None:
