@@ -41,14 +41,12 @@ Usage:
     pass
 """
 
-import os
 from argparse import Namespace
 
 from oauth_handler import OAuth2  # type: ignore
 from helpers import (  # type: ignore
     check_python,
     install_dependencies,
-    create_venv,
     exit_code,
     parse_arguments,
 )
@@ -57,8 +55,6 @@ from helpers import (  # type: ignore
 def initialise() -> None:
     """_summary_"""
     check_python()
-
-    create_venv(os.path.abspath(os.getcwd()))
     install_dependencies()
 
 

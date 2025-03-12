@@ -2,7 +2,6 @@
 
 """_summary_"""
 import os
-import venv
 import sys
 import subprocess
 import time
@@ -54,20 +53,6 @@ def subcheck(commands: List[str], err_msg: Optional[str] = None) -> None:
             err_msg = "Failed to run task"
 
         raise RuntimeError(err_msg) from exc
-
-
-def create_venv(venv_path: str) -> None:
-    """Create a virtual environment in the given path.
-
-    Args:
-        venv_path (str): _description_
-    """
-
-    if not os.path.exists(venv_path):
-        raise NameError(f"Path given: {os.path.abspath(venv_path)} does not exist")
-
-    venv.create(venv_path, with_pip=True)
-    print("Virtual Environment has been created")
 
 
 def check_python() -> None:
