@@ -10,6 +10,7 @@ node_modules/
 # Ignore build output directories
 dist/
 build/
+azure_oauth.egg-info/
 
 # Ignore IDE specific files
 .vscode/

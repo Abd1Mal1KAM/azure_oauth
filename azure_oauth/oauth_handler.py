@@ -11,7 +11,7 @@ from pathlib import Path
 
 from flask import request as req, Flask, redirect
 
-from helpers import (
+from helpers import (  # type: ignore
     create_random_string,
     get_many,
     handle_response,
@@ -179,13 +179,7 @@ class OAuth2:
             return None
 
         access_token = get_many(result, ["access_token"])
-        new_refresh_token = get_many(result, ["refresh_token"])
-        expiry_time = get_many(result, ["expires_in"])
 
-        print(
-            f"\nAccess Token: {access_token}\n"
-            + f"Expiry Time (s): {expiry_time}\n"
-            + f"Refresh Token: {new_refresh_token}"
-        )
+        print(json.dumps(result, indent=4))
 
         return access_token
