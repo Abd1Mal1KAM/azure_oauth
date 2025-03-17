@@ -72,14 +72,21 @@ def parse_arguments(
     helps: Optional[List[str]] = None,
     defaults: Optional[List[str]] = None,
     types: Optional[List[Type]] = None,
+    requirements: Optional[List[int]] = None,
 ) -> Namespace:
     """Parses command-line arguments.
 
     Args:
-        desc (str): The description of the script.
-        arguments (List[str]): A list of argument names.
-        helps (Optional[List[str]]): A list of help descriptions for the arguments.
-        Defaults to None.
+        arguments (list[str]): A list of argument names.
+        desc (Optional[str], optional): The description of the script. Defaults to None.
+        prog (Optional[str], optional): The name of the program. Defaults to None.
+        helps (Optional[List[str]], optional):
+            A list of help descriptions for the arguments. Defaults to None.
+        defaults (Optional[List[str]], optional):
+            A list of default values for the arguments. Defaults to None.
+        types (Optional[List[Type]], optional): A list of types for the arguments. Defaults to None.
+        requirements (Optional[List[int]], optional):
+            A list of indices of required arguments. Defaults to None.
 
     Returns:
         Namespace: The parsed arguments.
@@ -100,11 +107,8 @@ def parse_arguments(
 
     args = parser.parse_args()
 
-    if not all(getattr(args, arg) for arg in arguments):
-        print("\nEnter the missing parameters. (Dont add quotation marks)")
-
-    for arg in arguments:
-        if not getattr(args, arg):
+    for i, arg in enumerate(arguments):
+        if not getattr(args, arg) and bool(requirements and i in requirements):
             value = input(f"{arg}: ")
             value.strip("'").strip('"')
             setattr(args, arg, value)
@@ -131,7 +135,7 @@ def exit_code(func):
             return func(*args, **kwargs)
         except KeyboardInterrupt:
             print("\nExiting...")
-            time.sleep(3)
+            time.sleep(1)
             os.system("cls")
             sys.exit(0)
 

@@ -72,10 +72,7 @@ class OAuth2:
             auth_url = org_data.get("AUTH_URL")
             token_url = org_data.get("TOKEN_URL")
         else:
-            print(
-                f"\nService provided: {chosen_service} does not have stored urls."
-                + "\nPress Ctrl + C to start again"
-            )
+            print(f"\nService provided: {chosen_service} does not have stored urls.")
             return (None, None, None)
 
         return (auth_url, token_url, base_url)

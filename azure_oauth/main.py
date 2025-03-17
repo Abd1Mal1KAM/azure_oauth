@@ -70,6 +70,7 @@ def main() -> None:
         "CLIENT_SECRET",
         "REDIRECT_URI",
         "SCOPES",
+        "REFRESH_TOKEN",
     ]
     args: Namespace = parse_arguments(
         prog="OAuth2",
@@ -80,6 +81,7 @@ def main() -> None:
         - CLIENT_SECRET
         - REDIRECT_URI
         - SCOPES
+        - REFRESH_TOKEN (Optional)
         """,
         arguments=chosen_arguments,
         helps=[
@@ -88,9 +90,11 @@ def main() -> None:
             "Personal Client Secret for registered app",
             "URL to redirect to during the authorization process",
             "Scopes provided to the user depending on which apis need to be called",
+            "Refresh token to obtain new access tokens without user interaction",
         ],
         types=[str] * len(chosen_arguments),
         defaults=[""] * len(chosen_arguments),
+        requirements=[0, 1, 2, 3, 4]
     )
 
     try:
@@ -107,9 +111,10 @@ def main() -> None:
 
     app = OAuth2(service, redirect_uri, client_id, client_secret, scopes)
 
-    print("Press Ctrl + C to exit")
-
-    app.authenticate()
+    if args.REFRESH_TOKEN:
+        app.authenticate(True, args.REFRESH_TOKEN)
+    else:
+        app.authenticate()
 
 
 if __name__ == "__main__":
